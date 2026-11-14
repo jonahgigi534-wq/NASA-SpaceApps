@@ -21,8 +21,12 @@ M5 Sun 11:00 · M6 14:00 · M7 18:00 · M8 20:00 · **submit by 22:00** (deadlin
 1. `git clone https://github.com/jonahgigi534-wq/NASA-SpaceApps` and `cd NASA-SpaceApps`
 2. Put all data in one folder on this laptop (for example `~/Downloads/firms`): the 9 FIRMS zips,
    and if you have them, the AppEEARS files (Texas, Amazon, Australia) and missing-dates table.
-3. Open the challenge page's **Resources tab** and copy any new links or notes.
-4. Have your FIRMS MAP_KEY handy.
+3. Land cover: from the repo folder run `pip install requests` then
+   `python scripts/download_appeears.py` and log in with your Earthdata account. It puts all
+   1,950 AppEEARS files into `data/raw/appeears/<region>/` (skips ones you already have; safe to
+   re-run). If this is done, Prompt 0 doesn't need to sort any AppEEARS files.
+4. Open the challenge page's **Resources tab** and copy any new links or notes.
+5. Have your FIRMS MAP_KEY handy.
 
 ---
 
