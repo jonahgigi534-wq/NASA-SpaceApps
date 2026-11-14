@@ -3,19 +3,39 @@
 Paste one at a time. Run `/clear` between milestones so each starts fresh
 (CLAUDE.md is reloaded automatically). Don't move on until the milestone's check passes.
 
+## Before Prompt 0 (do this by hand, about 10 minutes)
+
+1. Clone the repo: `git clone https://github.com/jonahgigi534-wq/NASA-SpaceApps` and `cd` into it.
+2. Copy the 9 FIRMS zips from the shared Drive folder into `data/raw/texas/`, `data/raw/amazon/`
+   and `data/raw/australia/` (which zip goes where is listed in `data/raw/README.md`).
+3. Paste the official challenge text into `docs/challenge.md`, replacing the placeholder.
+4. Create `.env` in the repo root with `FIRMS_MAP_KEY=yourkey` (already gitignored).
+5. Optional: AppEEARS GeoTIFFs into `data/raw/appeears/<region>/`, and the missing-dates table
+   saved as `data/raw/missing_dates.csv`.
+6. Start Claude Code in the repo folder (`claude`), then press Shift+Tab until plan mode is on.
+
+Already in the repo, so don't recreate it: `CLAUDE.md`, this file, `.gitignore`,
+`data/raw/README.md`, `data/regions/*.geojson` (the three region boxes), `docs/challenge.md`.
+
 ---
 
 ## Prompt 0: setup and plan (Sat morning, first thing)
 
-Read CLAUDE.md and docs/challenge.md completely. Then:
+Read CLAUDE.md and docs/challenge.md completely. If docs/challenge.md asks for anything
+CLAUDE.md doesn't cover, list it and propose an update to CLAUDE.md. Then:
 1. Inspect data/raw/: list every file and size, open each zip's CSV header and first 3 rows
-   (don't unzip everything to disk if not needed), and confirm the column names and date
-   ranges against CLAUDE.md. Report any differences.
-2. Set up the repo: the layout from CLAUDE.md section 7, requirements.txt (pandas, pyarrow,
+   (don't unzip everything to disk), and confirm the column names and date ranges against
+   CLAUDE.md. Report any differences. If any zip is missing, stop and tell me which.
+2. The repo already has .gitignore, data/raw/README.md, data/regions/*.geojson and
+   docs/challenge.md. Keep those. Add the rest of the layout from CLAUDE.md section 7
+   (pipeline/, app/static/, results/figures/, tests/), plus requirements.txt (pandas, pyarrow,
    duckdb, numpy, scipy, statsmodels, shapely, rasterio, matplotlib, fastapi, uvicorn,
-   python-dotenv, pytest), .gitignore (data/raw, data/processed, .env), a Makefile.
-3. Write a task list covering milestones M1–M7.
-Use plan mode: show me the plan and wait for my OK before writing pipeline code.
+   python-dotenv, pytest) and a Makefile. Use data/regions/*.geojson as the region
+   definitions everywhere (map outlines, presets, clipping); don't hardcode the boxes twice.
+3. Create a virtual environment (.venv), install requirements, and confirm the imports work.
+4. Write a task list covering milestones M1–M7.
+Show me the plan and wait for my OK before writing pipeline code. After I approve, commit
+the scaffolding and push to origin main.
 
 ## Prompt 1: M1 ingest
 
@@ -68,12 +88,18 @@ the URL is public with no login. After I deploy, help me smoke-test the live URL
 
 ## Prompt 7: M7 submission assets
 
-Using only numbers from results/metrics.json, write:
+We're submitting **slides** as our demo (max 7 slides including the title; check the 2026
+Submission Guide in case the limit changed). Using only numbers from results/metrics.json, write:
 1. README.md: problem, NASA data used and how, method, validation results table, how to run,
    live link, AI-use disclosure, team.
 2. docs/AI_USE.md: specific disclosure of how Claude Code was used.
-3. A 7-slide outline (title; problem; why sensors disagree; our method; validation
-   proof with the before/after figure; app demo screenshots; impact and next steps), with
-   speaker notes.
-4. A 30-second video script with on-screen subtitles, as an alternative.
-5. The project-page text for the Space Apps submission form (summary, data used, how we used it).
+3. docs/slides.md: exactly 7 slides (1 title + live link; 2 problem; 3 why the sensors disagree;
+   4 our method; 5 validation proof: before/after continuity figure plus the key metrics;
+   6 app screenshots: map, calendar, mode toggle, CSV; 7 impact and next steps). For each
+   slide give the on-slide text (short), which figure or screenshot to use (file path in
+   results/figures/ or docs/screenshots/), and speaker notes.
+4. Take screenshots of the running app into docs/screenshots/ (or tell me exactly which
+   ones to take by hand).
+5. The project-page text for the Space Apps submission form (summary, data used, how we used
+   it, AI-use statement), in docs/submission_text.md.
+Then commit and push everything.

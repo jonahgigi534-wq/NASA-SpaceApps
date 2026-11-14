@@ -197,8 +197,11 @@ Single entry point: `make all` (or `python -m pipeline.run_all`) rebuilds everyt
 5. **M5 App frontend (Sun AM)**: full flow works in browser end to end.
 6. **M6 Deploy (Sun midday)**: public URL with no login (Render, Fly.io, or Hugging Face Spaces
    Docker). Keep app data small (<200 MB).
-7. **M7 Submission assets (Sun PM)**: README, docs/AI_USE.md, slide outline (≤7 slides incl.
-   title) or 30-second video script with subtitles, screenshots.
+7. **M7 Submission assets (Sun PM)**: README, docs/AI_USE.md, docs/slides.md (we chose
+   **slides**, ≤7 incl. title), screenshots, docs/submission_text.md.
+
+Repo: https://github.com/jonahgigi534-wq/NASA-SpaceApps (branch `main`). Region boxes live in
+`data/regions/*.geojson` and are the single source for region definitions.
 
 ## 9. Submission requirements to respect
 
