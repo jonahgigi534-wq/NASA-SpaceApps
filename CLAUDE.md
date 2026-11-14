@@ -32,7 +32,8 @@ win**: every claim about the harmonization must be backed by a number we compute
 
 ## 3. The data we already have
 
-Raw FIRMS archive zips (downloaded Nov 13). Put them in `data/raw/<region>/`:
+Raw FIRMS archive zips (downloaded Nov 13). The team provides them in Prompt 0 as a folder
+path; sort them into `data/raw/<region>/` by ID:
 
 | Region | Bounding box (W,S,E,N) | MODIS C6.1 | VIIRS S-NPP | VIIRS NOAA-20 |
 |---|---|---|---|---|
@@ -179,7 +180,8 @@ app/main.py                    # FastAPI
 app/static/                    # index.html, methods.html, js, css
 results/metrics.json, results/figures/
 tests/                         # pytest: gridding, polygon aggregation, anomaly math, NaN handling
-docs/challenge.md, docs/AI_USE.md
+scripts/record_demo.py         # Playwright + ffmpeg → docs/demo.mp4 (≤30 s, subtitles burned in)
+docs/challenge.md, docs/AI_USE.md, docs/video_script.md, docs/video_subtitles.srt
 README.md
 ```
 
@@ -197,8 +199,10 @@ Single entry point: `make all` (or `python -m pipeline.run_all`) rebuilds everyt
 5. **M5 App frontend (Sun AM)**: full flow works in browser end to end.
 6. **M6 Deploy (Sun midday)**: public URL with no login (Render, Fly.io, or Hugging Face Spaces
    Docker). Keep app data small (<200 MB).
-7. **M7 Submission assets (Sun PM)**: README, docs/AI_USE.md, docs/slides.md (we chose
-   **slides**, ≤7 incl. title), screenshots, docs/submission_text.md.
+7. **M7 Submission assets (Sun PM)**: README, docs/AI_USE.md, and the demo **video** (we chose
+   video: ≤30 s, English subtitles burned in): docs/video_script.md, docs/video_subtitles.srt,
+   scripts/record_demo.py (Playwright + ffmpeg) → docs/demo.mp4, docs/submission_text.md.
+   Upload to YouTube as Unlisted for a public no-login link.
 
 Repo: https://github.com/jonahgigi534-wq/NASA-SpaceApps (branch `main`). Region boxes live in
 `data/regions/*.geojson` and are the single source for region definitions.
@@ -207,8 +211,9 @@ Repo: https://github.com/jonahgigi534-wq/NASA-SpaceApps (branch `main`). Region 
 
 - Must use NASA data and describe which data and how it shaped the project (FIRMS MODIS C6.1,
   VIIRS S-NPP and NOAA-20; MCD12Q1 and MCD64A1 if used).
-- Demo: either a video ≤30 s with English subtitles OR ≤7 slides incl. title, hosted publicly.
-  (Verify against the 2026 Submission Guide.)
+- Demo: **we're submitting a video**, ≤30 s with English subtitles, hosted publicly (YouTube
+  Unlisted). Going over the limit makes us ineligible for Global Judging. (Verify the limit
+  against the 2026 Submission Guide.)
 - All links public, no login.
 - **AI disclosure**: we are using Claude Code. `docs/AI_USE.md` and the README must state
   clearly where and how AI was used (code generation, debugging, writing). No AI-generated
