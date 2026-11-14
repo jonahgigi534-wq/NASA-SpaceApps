@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"name": "amazon_arc"}, "geometry": {"type": "Polygon", "coordinates": [[[-65, -15], [-45, -15], [-45, -5], [-65, -5], [-65, -15]]]}}]}

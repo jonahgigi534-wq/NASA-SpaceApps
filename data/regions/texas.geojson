@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"name": "texas"}, "geometry": {"type": "Polygon", "coordinates": [[[-107, 25], [-93, 25], [-93, 37], [-107, 37], [-107, 25]]]}}]}
