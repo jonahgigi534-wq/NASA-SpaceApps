@@ -39,8 +39,14 @@ Read CLAUDE.md and docs/challenge.md completely before doing anything.
 
 1. Data. Copy every file from the data folder into the repo. Route each FIRMS zip by its ID to
    data/raw/texas/, data/raw/amazon/ or data/raw/australia/ using CLAUDE.md §3.1. AppEEARS
-   files go to data/raw/appeears/<region>/ (unzip if zipped; match region by name; ask me if
-   unclear). A missing-dates table goes to data/raw/missing_dates.csv. Verify all 9 FIRMS zips
+   files go to data/raw/appeears/<region>/. Warning: the three regions' AppEEARS GeoTIFFs have
+   identical file names, so the browser saved duplicates as "name (1).tif", "name (2).tif" in
+   unpredictable order. Do NOT route them by file name: open each .tif with rasterio, read its
+   bounds, and assign it to the region whose box in data/regions/*.geojson contains its center.
+   Rename to the original name (strip " (n)"). Expect per region: 25 MCD12Q1 LC_Type1 files and
+   300 MCD64A1 Burn_Date files plus QA layers; report counts per region and anything missing.
+   Region-prefixed files (texas-landcover-*, Amazon-landcover-*, aussie-landcover-*) route by
+   prefix; skip the duplicate-named statistics CSVs (we don't need them). A missing-dates table goes to data/raw/missing_dates.csv. Verify all 9 FIRMS zips
    exist, open as valid zips, and contain a fire_archive_*.csv. If anything is missing or
    broken, stop and tell me exactly which file.
 2. Key. Write FIRMS_MAP_KEY=<key> to .env. Confirm .env and data/raw are gitignored with
