@@ -14,6 +14,17 @@ compared directly. Two deliverables:
 2. **Web app** with a "burning activity calendar": the user draws an area, picks dates, and gets
    fire-activity anomalies against multi-year averages, plus a CSV download.
 
+The official brief (see docs/challenge.md, requirements R1–R11) says the app is for
+**early-warning and emergency responders, scientists, and land managers**, and must let them
+examine three things in their area of interest: **historical fire patterns, unusual
+conditions, and critical periods**. All three must be visible in the app, by name.
+The challenge author is **CONAE** (Argentina's space agency).
+
+Competition note: many teams have public repos for this same challenge. We stand out by
+(1) rigorous, honest validation with numbers (holdout + NOAA-20 transfer test), (2) treating
+missing data as missing, not zero, (3) a clear critical-periods view, and (4) a polished,
+plain-language app a fire manager could actually use.
+
 Judging criteria: Impact, Creativity, Validity, Relevance, Presentation. **Validity is where we
 win**: every claim about the harmonization must be backed by a number we computed and saved.
 
@@ -134,6 +145,16 @@ noisy):
 3. Anomaly per day: z-score, % of normal, and absolute difference. Missing-data days → NaN.
 4. Also offer weekly and monthly aggregation.
 
+### 5.1 Critical periods (required by the brief)
+For the user's polygon, from the baseline years:
+- **Fire season**: the contiguous day-of-year window(s) containing the top 80% of typical
+  annual activity; report start, peak and end dates.
+- **High-risk weeks**: weeks of the year whose climatological activity is in the top 20%.
+- **Chance of an unusual week**: for each week of the year, the share of baseline years in
+  which that week was above normal (z > 1). Label it as a historical frequency, not a forecast.
+- Show these as shaded bands on the calendar and a small "Critical periods" panel
+  ("Fire season usually runs Jul 20 – Oct 5, peaking around Sep 1").
+
 ## 6. Web app
 
 Stack: **FastAPI + DuckDB** backend reading Parquet; static frontend (plain HTML/JS, Leaflet +
@@ -145,6 +166,8 @@ Endpoints:
 - `POST /api/calendar`: polygon GeoJSON, start, end, baseline years, mode
   (`harmonized` | `modis_only` | `viirs_raw`), metric (`count` | `frp`) → daily values + anomalies
 - `POST /api/timeseries`: same inputs → monthly series 2001 → present, all three modes
+- `POST /api/critical_periods`: polygon, baseline years → fire season, high-risk weeks,
+  chance of an unusual week (§5.1)
 - `POST /api/csv`: same inputs → CSV download (date, value, baseline_mean, baseline_std,
   z, pct_of_normal, source_sensor, provisional_flag, missing_flag)
 
@@ -158,6 +181,12 @@ UI:
   for missing data, hatched for provisional NRT. Tooltip: date, value, normal, z.
 - Long-term line chart: raw vs harmonized, with the sensor-switch dates marked.
 - "Download CSV" button.
+- Three clearly labeled views matching the brief: **Historical patterns** (long-term chart +
+  multi-year calendar), **Unusual conditions** (anomaly calendar), **Critical periods**
+  (§5.1 panel and bands).
+- A plain-language summary for the selected area, written for responders and land managers
+  ("This area had 3× its normal fire activity in Aug 2023; its fire season usually peaks in
+  early September."). Generated from the computed numbers, never invented.
 - **Methods page** showing the validation figures and metrics from `results/metrics.json`.
 - Accessible: keyboard usable, colorblind-safe palette, legends everywhere.
 

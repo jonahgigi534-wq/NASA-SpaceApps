@@ -9,7 +9,9 @@ Paste one at a time. Run `/clear` between milestones so each starts fresh
 2. Put all the data you have in one folder you can point to (for example `~/Downloads/firms`):
    the 9 FIRMS zips, plus the AppEEARS GeoTIFFs and missing-dates table if you have them.
    Prompt 0 sorts them into place, so you don't need to.
-3. Have the official challenge text copied and ready to paste.
+3. Open https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/ and copy
+   the full official text (summary, objectives, considerations, resources). docs/challenge.md
+   already has a summary and a requirements checklist; the official text goes at the bottom.
 4. Start Claude Code in the repo folder (`claude`), then press Shift+Tab until plan mode is on.
 
 Already in the repo, so don't recreate it: `CLAUDE.md`, this file, `.gitignore`,
@@ -36,9 +38,12 @@ Read CLAUDE.md completely. Then:
    missing or broken, stop and tell me which. Don't commit any data (it's gitignored; confirm
    with `git status`).
 2. **Key.** Write `FIRMS_MAP_KEY=<key>` to .env and confirm .env is gitignored.
-3. **Challenge.** Replace the placeholder in docs/challenge.md with the challenge text above.
-   Compare it against CLAUDE.md: list anything the challenge asks for that CLAUDE.md doesn't
-   cover, and propose an update to CLAUDE.md.
+3. **Challenge.** Paste the official text above into the "Official text" section at the
+   bottom of docs/challenge.md (keep the rest of the file). Compare it against the
+   requirements checklist (R1–R11) and CLAUDE.md: list anything the official text asks for
+   that we don't cover yet (especially anything in its objectives, considerations or listed
+   resources), add it as a new R-row, and propose the CLAUDE.md update. Use the official
+   wording when it differs from our summary.
 4. **Inspect.** For each zip, read the CSV header and first 3 rows (don't unzip everything to
    disk) and the min/max acq_date. Confirm column names and date ranges against CLAUDE.md
    and report any differences.
@@ -95,8 +100,12 @@ days, CSV columns. Make every endpoint respond in <2 s for a Texas-sized polygon
 Build app/static/index.html and methods.html per CLAUDE.md section 6. No build step. Clean,
 modern, readable design; colorblind-safe diverging palette; legends and tooltips; works
 on a laptop screen and a phone. Add 3 preset events that the data actually shows as big
-anomalies (find them from the data, don't guess). Then run the app and test the full flow:
-draw → dates → calendar → mode toggle → long-term chart → CSV download. Fix anything broken.
+anomalies (find them from the data, don't guess). Make the three brief views explicit:
+Historical patterns, Unusual conditions, Critical periods (CLAUDE.md §5.1 and §6), plus the
+plain-language summary panel. Then run the app and test the full flow: draw → dates →
+calendar → critical periods → mode toggle → long-term chart → CSV download. Finally, walk
+through docs/challenge.md R1–R11 and confirm each one is visible in the app. Fix anything
+broken or missing.
 
 ## Prompt 6: M6 deploy
 
